@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Blog de Café</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|PT+Sans:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="../css/estilos.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        $(window).on('scroll', function(){
+        if ($(window).scrollTop()){
+            $('nav').addClass('black');
+        }
+        else 
+        {
+            $('nav').removeClass('black');
+        }
+    })
+        $(document).ready(function(){
+            $(".menu h4") .click(function(){
+                $("nav ul").toggleClass("active")
+            })
+        })
+    </script>
+   
+   
+   
+ 
+</head>
+
+<body>
+   <div class="responsive-bar">
+   <div class="logo">
+           <img src="logo.png" alt="">
+       </div>
+       <div class="menu">
+           <h4>Menu</h4>
+       </div>
+    
+</div>
+   <nav>
+       <div class="logo">
+           <img src="logo.png" alt="">
+       </div>
+       <ul>
+           <li><a href="index.html" class="active" >Home</a></li>
+           <li><a href="nosotros2.html">Nosotros</a></li>
+           <li><a href="servicios.html">Servicios</a></li>
+           <li><a href="#">Citas</a></li>
+           <li><a href="#">Contacto</a></li>
+       </ul>
+   </nav>
+    <header class="site-header">
+        <div class="contenedor">
+            <div class="barra">
+                
+            </div>
+            <div class="texto-header">
+                <h2 class="no-margin">Dra Giovanna Oliveros</h2>
+                <p>Ginecología y Obstetricia</p>
+            </div>
+        </div>
+    </header>
+    
+    <!--contenido principal--->
+    
+   <main class="contenedor">
+        <h2 class="centrar-texto">Sobre Nosotros</h2>
+        <div class="grid">
+            <div class="columnas-6">
+                <img src="../img/nosotros.jpg" alt="imagen nosotros">
+            </div>
+            <div class="columnas-6">
+            <p>Señor Dios todo poderoso, gracias te doy por este nuevo día, ya que con este nuevo día tengo la oportunidad de acercarme mas a ti, y de servirte mejor que ayer.
+
+Gracias te doy por mi familia, mis amigos y por todas las cosas  que ya has puesto enfrente de mí para mi bien.
+
+Santifica Señor por medio de tu Santo Espíritu, cada paso que yo de, para que a través de ellos de muestra de tu gloria y poder a los que encuentre por el camino.</p>
+           <p>Señor Dios todo poderoso, gracias te doy por este nuevo día, ya que con este nuevo día tengo la oportunidad de acercarme mas a ti, y de servirte mejor que ayer.
+
+Gracias te doy por mi familia, mis amigos y por todas las cosas  que ya has puesto enfrente de mí para mi bien.
+</p>
+            </div>
+        </div>
+    </main>
+
+    
+    <!--contenido principal--->
+    <div class="site-footer">
+        <div class="contenedor">
+            <div class="barra">
+                <p>Dra <span>Oliveros</span></p>
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>
