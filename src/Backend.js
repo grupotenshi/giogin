@@ -51,7 +51,7 @@ class Backend extends React.Component {
     const { usuario, clave } = this.state
     return (
 
-      <div>
+      <div id="backend">
         {
           user ?
           <Router history={hist}>
