@@ -25,7 +25,7 @@ class Backend extends React.Component {
     this.state = {usuario: '',
                 };
 
-    firebase.auth().onAuthStateChanged(function(user) {
+  /*  firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         // User is signed in.
         var displayName = user.displayName;
@@ -40,7 +40,7 @@ class Backend extends React.Component {
         // User is signed out.
         // ...
       }
-    });
+    });*/
   }
 
 

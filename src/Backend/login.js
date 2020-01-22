@@ -78,7 +78,7 @@ class Login extends Component{
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
-    firebase.auth().onAuthStateChanged(function(user) {
+    /*firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         // User is signed in.
         var displayName = user.displayName;
@@ -93,7 +93,7 @@ class Login extends Component{
         // User is signed out.
         // ...
       }
-    });
+    });*/
   }
 
   handleChange = (e) => {
@@ -104,7 +104,7 @@ class Login extends Component{
   handleSubmit = (e) => {
     e.preventDefault()
     const { usuario, clave } = this.state
-    var thisClass = this;
+    var thisClass = this; 
     thisClass.setState({ errorAlIngresar: false })
 
     firebase.auth().signInWithEmailAndPassword(usuario, clave).catch(function(error) {
