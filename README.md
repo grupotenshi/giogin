@@ -15,7 +15,7 @@ npm install react-chartist
 npm install react-bootstrap
 npm install chartist  
 npm install classnames
-npm install npm install react-router
+npm install react-router
 npm install react-google-maps
 npm install react-firebase
 npm install firebase
