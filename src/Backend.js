@@ -1,16 +1,15 @@
 import React from 'react';
-import './Backend/Backend.css';
 
-import { Router, Route, Switch, Redirect } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
 
 import withFirebaseAuth from 'react-with-firebase-auth';
 import * as firebase from "firebase";
 import 'firebase/auth';
 import firebaseConfig from './firebase';
 
-import Login from './Backend/login.js';
-import Admin from './Backend/layouts/Admin.js';
-import "./Backend/assets/css/material-dashboard-react.css?v=1.8.0";
+
+import Admin from './Backend/dashboard.js';
+
 
 import { createBrowserHistory } from "history";
 
@@ -52,17 +51,13 @@ class Backend extends React.Component {
     return (
 
       <div id="backend">
-        {
-          user ?
+
           <Router history={hist}>
           <Switch>
-            <Route path="/Backend/admin"  component={Admin} />
-            <Redirect from="/Backend" to="/Backend/admin/dashboard" />
+            <Route path="/Backend*"  component={Admin} />
           </Switch>
         </Router>
-          :
-          <Login/>
-        }
+
 
       </div>
 
