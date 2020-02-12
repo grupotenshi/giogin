@@ -12,6 +12,7 @@
     "chartist": "^0.11.4",
     "classnames": "^2.2.6",
     "firebase": "^7.7.0",
+    "firebase-admin": "^8.9.2",
     "install": "^0.13.0",
     "npm": "^6.13.6",
     "perfect-scrollbar": "^1.5.0",

@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom';
 
 
-import Home from './componentes/home';
-import Pacientes from './componentes/pacientes';
-import Historias from './componentes/historias';
+import Home from './vistas/home';
+import Pacientes from './vistas/pacientes';
+import Registro from './vistas/registro';
+import Historias from './vistas/historias';
 
 
 
@@ -123,6 +124,7 @@ export default class Dashboard extends Component {
               <Route exact path="/backend/home*" component={Home}/>
               <Route exact path="/backend/Pacientes*" component={Pacientes}/>
               <Route exact path="/backend/Historias*" component={Historias}/>
+              <Route exact path="/backend/Registro*" component={Registro}/>
               <Route component={Home}/>
             </Switch>
 

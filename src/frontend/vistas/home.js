@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 
-export default class Nav extends Component {
+export default class Home extends Component {
 
   render() {
     return(
@@ -14,14 +14,10 @@ export default class Nav extends Component {
             </div>
         </div>
 
-
-            <section className="imagen-contacto">
+    <section className="imagen-contacto">
         <div className="contenido-anuncio">
         </div>
     </section>
-
-
-
 
 
     <div id="carouselExampleIndicators" className="carousel slide carousel-fade mb-5" data-ride="carousel">
@@ -58,19 +54,9 @@ export default class Nav extends Component {
         <span className="sr-only">Next</span>
       </a>
     </div>
-
-
-
-
-
-
-
     <div className="seccion-inferior contenedor seccion">
         <section className="blog">
-
-
             <article className="entrada-blog">
-
             </article>
         </section>
     </div>

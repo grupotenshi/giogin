@@ -4,7 +4,7 @@ Página Web de Ginecología
 # Colaboradores
 Rafael
 
-# Utilizado Backend
+# Utilizado
  ---- v4.8.3. Publicado bajo la Licencia MIT.
 npm install @material-ui/core
 npm install typeface-roboto
@@ -23,3 +23,4 @@ npm install @react-firebase/auth
 npm install perfect-scrollbar
 npm install react-router-dom
 npm install react-with-firebase-auth
+npm install firebase-admin

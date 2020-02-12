@@ -9,6 +9,7 @@ import firebaseConfig from './firebase';
 
 
 import Admin from './Backend/dashboard.js';
+import Login from './Backend/login.js';
 
 
 import { createBrowserHistory } from "history";
@@ -46,17 +47,25 @@ class Backend extends React.Component {
 
 
   render(){
-    const { user, signOut } = this.props
-    const { usuario, clave } = this.state
+    const { user } = this.props
     return (
 
       <div id="backend">
 
-          <Router history={hist}>
-          <Switch>
-            <Route path="/Backend*"  component={Admin} />
-          </Switch>
-        </Router>
+        {
+          user?
+            <Router history={hist}>
+            <Switch>
+              <Route path="/Backend*"  component={Admin} />
+            </Switch>
+          </Router>
+
+
+          :
+            <Login/>
+
+
+        }
 
 
       </div>
