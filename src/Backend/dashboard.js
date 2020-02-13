@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom';
 
-
 import Home from './vistas/home';
 import Pacientes from './vistas/pacientes';
 import Registro from './vistas/registro';
 import Historias from './vistas/historias';
-
-
+import Nhistoria from './vistas/nhistoria';
 
 
 export default class Dashboard extends Component {
@@ -17,12 +15,16 @@ export default class Dashboard extends Component {
       <div className="sb-nav-fixed">
         <nav className="sb-topnav navbar navbar-expand navbar-dark bg-pink">
             <a className="navbar-brand" href="index.html">Giogin</a>
-            <button className="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i className="fas fa-bars"></i></button>
+            <button className="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#">
+                <i className="fas fa-bars"></i>
+            </button>
             <form className="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
                 <div className="input-group d-none">
                     <input className="form-control" type="text" placeholder="Buscar" aria-label="Search" aria-describedby="basic-addon2" />
                     <div className="input-group-append">
-                        <button className="btn btn-dark" type="button"><i className="fas fa-search"></i></button>
+                        <button className="btn btn-dark" type="button">
+                            <i className="fas fa-search"></i>
+                        </button>
                     </div>
                 </div>
             </form>
@@ -124,6 +126,7 @@ export default class Dashboard extends Component {
               <Route exact path="/backend/home*" component={Home}/>
               <Route exact path="/backend/Pacientes*" component={Pacientes}/>
               <Route exact path="/backend/Historias*" component={Historias}/>
+                <Route exact path="/backend/nhistoria*" component={Nhistoria}/>
               <Route exact path="/backend/Registro*" component={Registro}/>
               <Route component={Home}/>
             </Switch>

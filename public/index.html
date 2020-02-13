@@ -58,35 +58,38 @@
     <script src="/js/jquery.dataTables.min.js"></script>
 
 
-    <script>
-        $(document).ready(function() {
-            $('#dataTable').DataTable();
-        });
-    </script>
-
-
-
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
 
-<script type="text/javascript">
 
-$('.carousel').carousel({
-  interval: 59000
-})
+<script>
+    function cita() {
 
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Cita tomada con exito',
+            showConfirmButton: false,
+            timer: 2500
+        })
+
+    }
 </script>
 
 
+
+
     <script type="text/javascript">
-        $(window).on('scroll', function() {
+
+
+        /*$(window).on('scroll', function() {
             if ($(window).scrollTop()) {
                 $('nav').addClass('black');
             } else {
                 $('nav').removeClass('black');
             }
         })
+        */
         $(document).ready(function() {
             $(".menu h4").click(function() {
                 $("nav ul").toggleClass("active")

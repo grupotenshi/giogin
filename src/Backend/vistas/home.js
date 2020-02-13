@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom';
-
+import { Redirect } from "react-router-dom";
+import Registro from "./registro";
 
 /*Firebase*/
 import * as firebase from 'firebase/app';
@@ -13,39 +13,69 @@ const db = firebase.firestore();
 
 
 export default class Home extends Component {
-  constructor(props) {
-      super(props);
-      this.ref = db.collection('Proyectos').doc('Giogin').collection("Temporal");
-      this.unsubscribe = null;
-      this.state = {
-        boards: []
-      };
-    }
-
-    onCollectionUpdate = (querySnapshot) => {
-    const boards = [];
-    querySnapshot.forEach((doc) => {
-      const { cedula, nombre, fecha, horario, id } = doc.data();
-      boards.push({
-        key: id,
-        doc, // DocumentSnapshot
-        cedula,
-        nombre,
-        fecha,
-        horario
-      });
-    });
-    this.setState({
-      boards
-   });
+  state= {
+    items:[],
+    redirect: ''
   }
 
   componentDidMount() {
-    this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate);
-  }
+   db.collection('Proyectos').doc('Giogin').collection("Temporal").onSnapshot((snapShots)=>{
+     this.setState({
+       items: snapShots.docs.map( doc=>{
+         return {id:doc.id, data:doc.data()}
+       })
+     })
+     window.$('#dataTable').DataTable();
+   },error => {
+     console.log("ERROR AL CARGAR DATA");
+   });
 
+
+ };
+
+ deleteItem =(id) =>{
+   db.collection('Proyectos').doc('Giogin').collection("Temporal").doc(id).delete();
+ }
+
+ atender = (data) =>{
+    let ref = db.collection('Proyectos').doc('Giogin').collection("Pacientes").doc(data.cedula);
+    ref.get()
+     .then(doc => {
+       if (!doc.exists) {
+         this.setState({
+           redirect:<Redirect to={{
+                                  pathname: '/backend/Registro',
+                                  state: { data: data }
+                              }}
+                      />
+         })
+
+
+         return
+       }else{
+         this.setState({
+           redirect:<Redirect to={{
+                                  pathname: '/backend/nhistoria',
+                                  state: { data: doc.data() }
+                              }}
+                      />
+         })
+         return
+       }
+     })
+     .catch(err => {
+       alert("Error");
+       console.log('Error getting documents', err);
+     });
+ }
 
   render () {
+    const{items,redirect} = this.state;
+
+    if (redirect) {
+       return redirect;
+     }
+
     return (
       <main>
                 <div className="container-fluid">
@@ -77,28 +107,26 @@ export default class Home extends Component {
                                     <tbody>
 
 
+                                    {items && items !== undefined? items.map((item,key)=>(
+                                      <tr key={key}>
+                                          <td>{item.data.cedula}</td>
+                                          <td>{item.data.nombre}</td>
+                                          <td>{item.data.fecha}</td>
+                                          <td>{item.data.horario}</td>
 
-                                    {this.state.boards.map(board =>
-                                          <tr>
-                                              <td>{board.cedula}</td>
-                                              <td>{board.nombre}</td>
-                                              <td>{board.fecha}</td>
-                                              <td>{board.horario}</td>
-                                              <td className="botones">
-                                                <NavLink
-                                                exact to="/backend/registro"
-                                                className="btn btn-success"
-                                                >
-                                                Atender
-                                                </NavLink>
-                                              </td>
-                                              <td className="botones"> <a className="btn btn-danger">cancelar</a></td>
-                                          </tr>
-                                      )
-                                      }
+                                          <td className="botones">
+                                            <button onClick={() => this.atender(item.data)} className="btn btn-success">
+                                            Atender
+                                            </button>
+                                          </td>
 
-
-
+                                          <td className="botones">
+                                            <buttom className="btn btn-danger" onClick={() => this.deleteItem(item.id)}>
+                                            CANCELAR
+                                            </buttom>
+                                          </td>
+                                      </tr>
+                                    )):null}
 
 
 

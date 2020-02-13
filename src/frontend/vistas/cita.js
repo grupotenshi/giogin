@@ -41,50 +41,67 @@ export default class Cita extends Component {
       'horario' : horario
     });
 
+    //document.getElementById("reset").reset();
+
+    this.setState({
+      nombre: '',
+      cedula: '',
+      fecha: '',
+      horario: ''
+
+   })
+
+    window.Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Cita tomada con exito',
+        showConfirmButton: false,
+        timer: 2500
+    })
 
   }
 
   render() {
     return(
       <main>
-      <div className="cita container-fluid px-0 bg-white ">
-                  <div className="animated fadeInLeft publicidad d-none d-lg-block">
-                  </div>
-                  <div className="container">
-                      <form className="row justify-content-center"  onSubmit={this.handleSubmit}>
-                          <div className="col-12 col-lg-7">
-                              <h3 className="text-center mb-5 animated fadeInDown">Solicita tu cita</h3>
+        <div className="cita container-fluid px-0 bg-white ">
+            <div className="animated fadeInLeft publicidad d-none d-lg-block">
+            </div>
+            <div className="container">
+                <form className="row justify-content-center" onSubmit={this.handleSubmit} id="reset">
+                    <div className="col-12 col-lg-7">
+                        <h3 className="text-center mb-5 animated fadeInDown">Solicita tu cita</h3>
 
-    <div className="form-group animated fadeInDown">
-        <label htmlFor="exampleInputPassword1">Documento de Identidad</label>
-        <input type="text" className="form-control" name="cedula" onChange={this.handleChange}/>
-    </div>
+                        <div className="form-group animated fadeInDown">
+                            <label htmlFor="exampleInputPassword1">Documento de Identidad</label>
+                            <input type="text" className="form-control" value={this.state.cedula} name="cedula" onChange={this.handleChange} />
+                        </div>
 
-    <div className="form-group animated fadeInDown">
-        <label htmlFor="exampleInputEmail1">Nombre y apellido</label>
-        <input type="text" className="form-control" name="nombre" aria-describedby="emailHelp" onChange={this.handleChange}/>
-    </div>
+                        <div className="form-group animated fadeInDown">
+                            <label htmlFor="exampleInputEmail1">Nombre y apellido</label>
+                            <input type="text" className="form-control" value={this.state.nombre} name="nombre" aria-describedby="emailHelp" onChange={this.handleChange} />
+                        </div>
 
-    <div className="form-group animated fadeInDown">
-        <label htmlFor="exampleInputEmail1">Fecha de la cita</label>
-        <input type="date" className="form-control" name="fecha" aria-describedby="emailHelp" onChange={this.handleChange}/>
-    </div>
+                        <div className="form-group animated fadeInDown">
+                            <label htmlFor="exampleInputEmail1">Fecha de la cita</label>
+                            <input type="date" className="form-control" value={this.state.fecha} name="fecha" aria-describedby="emailHelp" onChange={this.handleChange} />
+                        </div>
 
-    <div className="form-group animated fadeInDown">
-        <label htmlFor="horario">Horario</label>
-        <select  className="form-control" name="horario" onChange={this.handleChange}>
-            <option value="">Seleccione</option>
-            <option value="Mañana">Mañana</option>
-            <option value="Tarde">Tarde</option>
-        </select>
-    </div>
+                        <div className="form-group animated fadeInDown">
+                            <label htmlFor="horario">Horario</label>
+                            <select className="form-control" name="horario" value={this.state.horario} onChange={this.handleChange}>
+                                <option value="">Seleccione</option>
+                                <option value="Mañana">Mañana</option>
+                                <option value="Tarde">Tarde</option>
+                            </select>
+                        </div>
 
-        <button type="submit" className="btn btn-1 mt-5  d-block btn-lg">Solicitar</button>
-                          </div>
-                      </form>
-                  </div>
-              </div>
-    </main>
+                        <button type="submit" className="btn btn-1 mt-5  d-block btn-lg">Solicitar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+      </main>
     )
   }
   }

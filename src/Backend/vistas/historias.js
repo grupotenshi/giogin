@@ -1,112 +1,124 @@
 import React, { Component } from 'react'
+import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom';
+
+/*Firebase*/
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import firebaseConfig from '../../firebase';
+
+const firebaseApp = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app();
+const db = firebase.firestore();
+
+
 
 export default class Historias extends Component {
+  state= {
+    items:[]
+
+  }
+
+  componentDidMount() {
+
+    var arregloHistorias =[];
+   db.collection('Proyectos').doc('Giogin').collection("Pacientes").onSnapshot(snapShotsPacientes=>{
+
+     snapShotsPacientes.docs.forEach(docPaciente => {
+       db.collection('Proyectos').doc('Giogin').collection("Pacientes").doc(docPaciente.id).collection("Historia").onSnapshot((snapShotsHistoria)=>{
+
+         snapShotsHistoria.docs.forEach( docHistoria =>{
+            arregloHistorias.push({id:docHistoria.id, historia:docHistoria.data(), paciente:docPaciente.data()});
+          })
+
+          this.setState({
+            items: arregloHistorias
+          });
+          window.$('#dataTable').DataTable();
+
+       },error => {
+         console.log("ERROR AL CARGAR");
+       });
+     });
 
 
+     /*this.setState({
+       items: snapShots.docs.map( doc=>{
+         return {id:doc.id, data:doc.data()}
+       })
+     })*/
+
+   },error => {
+     console.log("ERROR AL CARGAR HISTORIA");
+   });
+
+
+ };
+
+
+ deleteItem =(id) =>{
+   db.collection('Proyectos').doc('Giogin').collection("Historia").doc(id).delete();
+ }
   render () {
+    const{items} = this.state;
     return (
-      <main>
-                <div className="container-fluid">
+    <main>
+        <div className="container-fluid">
 
-                    <div className="row align-items-center">
-                        <div className="col">
-                            <h1 className="mt-4">Libro de historias</h1>
-                        </div>
-                        <div className="col-2">
-                        </div>
-                    </div>
+            <div className="row align-items-center">
+                <div className="col">
+                    <h1 className="mt-4">Libro de historias</h1>
+                </div>
+                <div className="col-2">
+                </div>
+            </div>
 
+            <div className="row">
 
+                <div className="col-12">
+                    <div className="table-responsive table-hover">
+                        <table className="table table-bordered" id="dataTable" width="100%" cellSpacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Nombre y Apellido</th>
+                                    <th>Cedula</th>
+                                    <th>Fecha historia</th>
+                                    <th>Servicio</th>
+                                    <th className="d-none"></th>
+                                    <th className="d-none"></th>
+                                </tr>
+                            </thead>
 
-                    <div className="row">
+                            <tbody>
+                            {items && items !== undefined? items.map((item,key)=>(
+                              <tr key={key}>
+                                  <td>{item.paciente.nombre}</td>
+                                  <td>{item.paciente.cedula}</td>
+                                  <td>{item.historia.fecha}</td>
+                                  <td>{item.historia.servicio}</td>
 
-                        <div className="col-12">
-                            <div className="table-responsive table-hover">
-                                <table className="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>Nombre y Apellido</th>
-                                            <th>Cedula</th>
-                                            <th>Fecha historia</th>
-                                            <th>Servicio</th>
-                                            <th className="d-none"></th>
-                                            <th className="d-none"></th>
-                                        </tr>
-                                    </thead>
+                                   <td className="botones">
+                                    <NavLink
+                                    exact to="/backend/nhistoria"
+                                    className="btn btn-success"
+                                    >
+                                    HISTORIA
+                                    </NavLink>
+                                    </td>
 
-                                    <tbody>
-                                        <tr>
-                                            <td>Jully del Valle Oliveros Guzman</td>
-                                            <td>8377071</td>
-                                            <td>28/31/2020</td>
-                                            <td>Consulta</td>
-                                            <td className="botones"> <a href="historia.html" className="btn btn-success">Ver</a></td>
-                                            <td className="botones"> <a href="#" className="btn btn-danger">Eliminar</a></td>
-                                        </tr>
+                                  <td className="botones">
+                                    <button className="btn btn-danger" onClick={()=>this.deleteItem(item.id)}>
+                                    CANCELAR
+                                    </button>
+                                  </td>
+                              </tr>
+                            )):null}
 
-                                        <tr>
-                                            <td>Michal Jackson</td>
-                                            <td>8377071</td>
-                                            <td>28/31/2000</td>
-                                            <td>Consulta</td>
-                                            <td className="botones"> <a href="historia.html" className="btn btn-success">Ver</a></td>
-                                            <td className="botones"> <a href="#" className="btn btn-danger">Eliminar</a></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>Elvis Presli</td>
-                                            <td>8377071</td>
-                                            <td>28/31/1964</td>
-                                            <td>Ecografia</td>
-                                            <td className="botones"> <a href="historia.html" className="btn btn-success">Ver</a></td>
-                                            <td className="botones"> <a href="#" className="btn btn-danger">Eliminar</a></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>Sean Paul</td>
-                                            <td>20547844</td>
-                                            <td>28/31/1999</td>
-                                            <td>Ecografia</td>
-                                            <td className="botones"> <a href="historia.html" className="btn btn-success">Ver</a></td>
-                                            <td className="botones"> <a href="#" className="btn btn-danger">Eliminar</a></td>
-                                        </tr>
-
-
-                                        <tr>
-                                            <td>Sean Paul</td>
-                                            <td>20547844</td>
-                                            <td>28/31/1999</td>
-                                            <td>Consulta</td>
-                                            <td className="botones"> <a href="historia.html" className="btn btn-success">Ver</a></td>
-                                            <td className="botones"> <a href="#" className="btn btn-danger">Eliminar</a></td>
-                                        </tr>
-
-
-                                        <tr>
-                                            <td>Simon Bolivar</td>
-                                            <td>20547844</td>
-                                            <td>28/31/1999</td>
-                                            <td>Consulta</td>
-                                            <td className="botones"> <a href="historia.html" className="btn btn-success">Ver</a></td>
-                                            <td className="botones"> <a href="#" className="btn btn-danger">Eliminar</a></td>
-                                        </tr>
-
-
-                                        <tr>
-                                            <td>Emilio Lovera</td>
-                                            <td>20547844</td>
-                                            <td>28/31/1999</td>
-                                            <td>Ecografia</td>
-                                            <td className="botones"> <a href="historia.html" className="btn btn-success">Ver</a></td>
-                                            <td className="botones"> <a href="#" className="btn btn-danger">Eliminar</a></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </main>
+            </div>
+        </div>
+    </main>
     )
   }
 }
