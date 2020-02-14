@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
+import { Redirect } from "react-router-dom";
 
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import firebaseConfig from '../../firebase';
+
 
 const firebaseApp = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app();
 const db = firebase.firestore();
@@ -19,15 +21,24 @@ export default class Nhistoria extends Component {
       estado: '',
       textos: {
         nombre: '',
-        telefono: ''
-      }
+        telefono: '',
+        descripcion: '',
+      },
+      id: ''
     };
 
     if(props.location.state && props.location.state.data){
       let { data } = props.location.state
       this.state.cedula = data.cedula;
       this.state.textos.nombre = data.nombre;
-      this.state.textos.telefono = data.telefono;
+      this.state.textos.telefono = data.movil;
+      this.state.textos.descripcion = data.descripcion;
+      this.state.historia = data.historia;
+      this.state.seguro = data.seguro;
+      this.state.servicio = data.servicio;
+      this.state.estado = data.estado;
+      this.state.id = data.id;
+
     }
 
 
@@ -44,18 +55,81 @@ export default class Nhistoria extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     const { cedula, servicio, seguro, historia, estado} = this.state
-    let tablaHistoria = db.collection('Proyectos').doc('Giogin').collection('Pacientes').doc(cedula).collection('Historia');
 
-    tablaHistoria.add({
-      'servicio': servicio,
-      'seguro': seguro,
-      'historia': historia,
-      'estado': estado
-    });
+    if(!cedula || servicio == "" || seguro == '' ||  historia =='' ){
+      window.Swal.fire({
+          position: 'center',
+          icon: 'warning',
+          title: 'Debe completar todos los campos',
+          showConfirmButton: false,
+          timer: 2500
+      })
+      return
+    }
+
+    var fecha
+    var date = new Date();;
+		var hours = date.getHours();
+		var minutes = date.getMinutes();
+		var ampm = hours >= 12 ? 'pm' : 'am';
+		hours = hours % 12;
+		hours = hours ? hours : 12; // the hour '0' should be '12'
+		minutes = minutes < 10 ? '0'+minutes : minutes;
+		var strTime = hours + ':' + minutes + ' ' + ampm;
+		fecha = date.getDate() + "/" + (date.getMonth()+1) + "/" + date.getFullYear() + "    " + (strTime.replace(":", ":").replace(" ", " "));
+
+
+    if(this.state.id){
+      let tablaHistoria = db.collection('Proyectos').doc('Giogin').collection('Pacientes').doc(cedula).collection('Historia').doc(this.state.id);
+
+
+        tablaHistoria.set({
+          'servicio': servicio,
+          'seguro': seguro,
+          'historia': historia,
+          'estado': estado,
+          'fecha' : fecha
+        });
+
+    }else{
+      let tablaHistoria = db.collection('Proyectos').doc('Giogin').collection('Pacientes').doc(cedula).collection('Historia');
+
+
+        tablaHistoria.add({
+          'servicio': servicio,
+          'seguro': seguro,
+          'historia': historia,
+          'estado': estado,
+          'fecha' : fecha
+        });
+      }
+
+    window.Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Historia creada con exito',
+        showConfirmButton: false,
+        timer: 2500
+    })
+
+
+    this.setState({
+      redirect:<Redirect to={{
+                             pathname: '/backend/home'
+                         }}
+                 />
+    })
   }
 
 
+
   render () {
+
+    const{redirect} = this.state;
+
+    if (redirect) {
+       return redirect;
+     }
     return (
       <main>
           <div className="container-fluid">
@@ -88,20 +162,20 @@ export default class Nhistoria extends Component {
 
                       <div className="col-4">
                           <h5 className="font-italic">Informacion del paciente</h5>
-                          <p>Este paciente ha presentado en varios ocaciones alergia a los anticonceptivos, no se le debe suministrar inplanon</p>
+                          <p>{this.state.textos.descripcion}</p>
                       </div>
 
                       <div className="col-4 align-self-center">
                           <div className="form-group">
-                              <select className="form-control" name="servicio" onChange={this.handleChange}>
-                                  <option value="Consulta">Consulta</option>
+                              <select className="form-control" name="servicio" value={this.state.servicio} onChange={this.handleChange}>
+                                  <option value="">Seleccione Servicio</option>
                                   <option value="Citología">Citología</option>
                                   <option value="Planificación Familiar">Planificación Familiar</option>
                                   <option value="Ecografía">Ecografía</option>
                               </select>
                           </div>
                           <div className="form-group">
-                              <select className="form-control" name="seguro" onChange={this.handleChange}>
+                              <select className="form-control" name="seguro" value={this.state.seguro} onChange={this.handleChange}>
                                   <option value="">Seleccione seguro</option>
                                   <option value="Ministerio de educación">Ministerio de educación</option>
                                   <option value="Vitalicia">Vitalicia</option>
@@ -118,7 +192,7 @@ export default class Nhistoria extends Component {
                           <h4 className="mt-4">Historia</h4>
                       </div>
                       <div className="col-8">
-                          <textarea className="form-control" name="historia" onChange={this.handleChange} cols="30" rows="10"></textarea>
+                          <textarea className="form-control" value={this.state.historia} name="historia" onChange={this.handleChange} cols="30" rows="10"></textarea>
                       </div>
                   </div>
 
@@ -126,7 +200,6 @@ export default class Nhistoria extends Component {
                       <div className="col-4 d-flex justify-content-around">
                           <a href="#" className="btn btn-info">Limpiar</a>
                           <button type="submit" className="btn btn-success ">Guardar</button>
-                          <a href="index.html" className="btn btn-danger">Cancelar</a>
                       </div>
                   </div>
               </form>

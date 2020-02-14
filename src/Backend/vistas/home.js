@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Redirect } from "react-router-dom";
-import Registro from "./registro";
 
 /*Firebase*/
 import * as firebase from 'firebase/app';
@@ -15,11 +14,22 @@ const db = firebase.firestore();
 export default class Home extends Component {
   state= {
     items:[],
-    redirect: ''
+    redirect: '',
+    fechasistema: ''
   }
 
+
+
+
   componentDidMount() {
-   db.collection('Proyectos').doc('Giogin').collection("Temporal").onSnapshot((snapShots)=>{
+
+
+
+
+
+
+
+   db.collection('Proyectos').doc('Giogin').collection("Temporal").where('fecha', '==', '2020-02-05').onSnapshot((snapShots)=>{
      this.setState({
        items: snapShots.docs.map( doc=>{
          return {id:doc.id, data:doc.data()}
@@ -34,20 +44,52 @@ export default class Home extends Component {
  };
 
  deleteItem =(id) =>{
-   db.collection('Proyectos').doc('Giogin').collection("Temporal").doc(id).delete();
- }
+   window.Swal.fire({
+     title: 'Esta seguro',
+     text: "Si cancela la cita no podra revertir los cambios",
+     icon: 'warning',
+     showCancelButton: true,
+     confirmButtonColor: '#3085d6',
+     cancelButtonColor: '#d33',
+     confirmButtonText: 'Si, cancelar',
+     cancelButtonText: 'No, cancelar'
+   }).then((result) => {
+     if (result.value) {
+       window.Swal.fire(
+         'Cita cancelada!',
+         'Registro eliminado',
+         'success'
+       )
+        db.collection('Proyectos').doc('Giogin').collection("Temporal").doc(id).delete();
+     }
+   })
+      return
+ };
 
  atender = (data) =>{
     let ref = db.collection('Proyectos').doc('Giogin').collection("Pacientes").doc(data.cedula);
     ref.get()
      .then(doc => {
        if (!doc.exists) {
-         this.setState({
-           redirect:<Redirect to={{
-                                  pathname: '/backend/Registro',
-                                  state: { data: data }
-                              }}
-                      />
+         window.Swal.fire({
+           title: 'Paciente no registrado',
+           text: "Para atender debe registrarlo",
+           icon: 'info',
+           showCancelButton: true,
+           confirmButtonColor: '#3085d6',
+           cancelButtonColor: '#d33',
+           confirmButtonText: 'Si, registrar',
+           cancelButtonText: 'No, registrar'
+         }).then((result) => {
+           if (result.value) {
+             this.setState({
+               redirect:<Redirect to={{
+                                      pathname: '/backend/Registro',
+                                      state: { data: data }
+                                  }}
+                          />
+             })
+           }
          })
 
 
@@ -116,7 +158,7 @@ export default class Home extends Component {
 
                                           <td className="botones">
                                             <button onClick={() => this.atender(item.data)} className="btn btn-success">
-                                            Atender
+                                            ATENDER
                                             </button>
                                           </td>
 

@@ -1,8 +1,74 @@
 form h3 {}
 
+
+  .dataTables_empty{
+    display : none;
+  }
+
+.salir{
+
+    color: white;
+    font-size: 1.5em;
+
+}
+
+.movile{
+    height: calc(100vh - 100px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.movilebtn{
+      width: 150px;
+      background: #F1948A;
+      height: 150px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5em;
+      color: white!important;
+}
+
+
+.movilebtn2{
+  width: 150px;
+      background: #F1948A;
+      height: 150px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5em;
+      color: white!important;
+      transform: translate(161px, 44px);
+}
+
+.movilebtn2:hover {
+    background: white;
+    color: #F1948A!important;
+    text-decoration: none;
+    transition: 0.3s;
+    height: 160px;
+    width: 160px;
+}
+
+
+
+
+.boton cita{
+    height: calc(100vh - 100px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 .btn-1 {
     background-color: white;
-    border-color: #F1948A;
+    border-color: #F1948A!important;
     font-weight: bold;
     color: #F1948A !important;
 }
@@ -227,7 +293,17 @@ nav ul li a:hover {
         line-height: 50px !important;
         font-size: 1.2em;
         color: #fff;
+        margin: 0;
     }
+
+    .btn-1 {
+        background-color: #F1948A!important;
+        border-color: #F1948A!important;
+        font-weight: bold;
+        color: white !important;
+        font-size: 2.5em
+    }
+
 }
 /**********container*****/
 

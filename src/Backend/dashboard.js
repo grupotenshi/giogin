@@ -6,7 +6,16 @@ import Pacientes from './vistas/pacientes';
 import Registro from './vistas/registro';
 import Historias from './vistas/historias';
 import Nhistoria from './vistas/nhistoria';
+//Firebase
+import {
+  FirebaseAuthProvider,
+  FirebaseAuthConsumer
+} from "@react-firebase/auth";
+import firebase from "firebase/app";
+import "firebase/auth";
+import firebaseConfig from '../firebase';
 
+const firebaseApp = !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app()
 
 export default class Dashboard extends Component {
 
@@ -14,8 +23,8 @@ export default class Dashboard extends Component {
     return (
       <div className="sb-nav-fixed">
         <nav className="sb-topnav navbar navbar-expand navbar-dark bg-pink">
-            <a className="navbar-brand" href="index.html">Giogin</a>
-            <button className="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#">
+            <a className="navbar-brand" href="index.html">Servicio integral de Ginecología </a>
+            <button className="btn btn-link btn-sm order-1 order-lg-0 d-none" id="sidebarToggle" href="#">
                 <i className="fas fa-bars"></i>
             </button>
             <form className="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
@@ -32,12 +41,14 @@ export default class Dashboard extends Component {
 
             <ul className="navbar-nav ml-auto ml-md-0">
                 <li className="nav-item dropdown">
-                    <a className="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i className="fas fa-user fa-fw"></i></a>
-                    <div className="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                        <a className="dropdown-item" href="#">Configuración</a><a className="dropdown-item" href="#">Activity Log</a>
-                        <div className="dropdown-divider"></div>
-                        <a className="dropdown-item" href="login.html">Salir</a>
-                    </div>
+                    <a onClick={() => {
+                        firebase
+                          .app()
+                          .auth()
+                          .signOut();
+                      }}>
+                      <i className="fas fa-sign-out-alt salir"></i>
+                    </a>
                 </li>
             </ul>
         </nav>

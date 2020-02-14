@@ -34,18 +34,58 @@ export default class Pacientes extends Component {
  };
 
 
-
  deleteItem =(id) =>{
-   db.collection('Proyectos').doc('Giogin').collection("Pacientes").doc(id).delete();
+   window.Swal.fire({
+     title: 'Esta seguro',
+     text: "Si eliminas este paciente borraras todas sus historias y no podras revertir los cambios",
+     icon: 'warning',
+     showCancelButton: true,
+     confirmButtonColor: '#3085d6',
+     cancelButtonColor: '#d33',
+     confirmButtonText: 'Si, eliminar'
+   }).then((result) => {
+     if (result.value) {
+       window.Swal.fire(
+         'Eliminado!',
+         'Registro eliminado',
+         'success'
+       )
+      db.collection('Proyectos').doc('Giogin').collection("Pacientes").doc(id).delete();
+     }
+   })
+      return
  };
 
 
- atender = (data) =>{
 
+ editar = (data) =>{
     let ref = db.collection('Proyectos').doc('Giogin').collection("Pacientes").doc(data.cedula);
     ref.get()
      .then(doc => {
+         this.setState({
+           redirect:<Redirect to={{
+                                  pathname: '/backend/registro',
+                                  state: { data: doc.data() }
+                              }}
+                      />
+         })
+         return
 
+     })
+     .catch(err => {
+       alert("Error");
+       console.log('Error getting documents', err);
+     });
+ }
+
+
+
+
+
+ atender = (data) =>{
+    let ref = db.collection('Proyectos').doc('Giogin').collection("Pacientes").doc(data.cedula);
+    ref.get()
+     .then(doc => {
          this.setState({
            redirect:<Redirect to={{
                                   pathname: '/backend/nhistoria',
@@ -122,19 +162,14 @@ export default class Pacientes extends Component {
 
 
                                          <td className="botones">
-                                          <NavLink
-                                          exact to="/backend/Registro"
-                                          className="btn btn-primary"
-                                          >
+                                         <buttom className="btn btn-primary" onClick={()=>this.editar(item.data)}>
                                           EDITAR
-                                          </NavLink>
+                                         </buttom>
                                           </td>
 
-
-
                                           <td className="botones">
-                                            <buttom className="btn btn-danger" onClick={()=>this.deleteItem(item.id)}>
-                                            CANCELAR
+                                            <buttom className="btn btn-danger" onClick={()=>this.deleteItem(item.data.cedula)}>
+                                            ELIMINAR
                                             </buttom>
                                           </td>
                                       </tr>

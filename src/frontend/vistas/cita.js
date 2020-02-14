@@ -34,6 +34,22 @@ export default class Cita extends Component {
     const { cedula, nombre, fecha, horario } = this.state
     let tablaTemporal = db.collection('Proyectos').doc('Giogin').collection('Temporal');
 
+
+
+    if(cedula == '' || nombre == '' ){
+
+      window.Swal.fire({
+          position: 'center',
+          icon: 'warning',
+          title: 'Debe completar todos los campos',
+          showConfirmButton: false,
+          timer: 2500
+      })
+      return 0
+    }
+
+
+
     tablaTemporal.add({
       'nombre': nombre,
       'cedula' : cedula,
@@ -54,7 +70,7 @@ export default class Cita extends Component {
     window.Swal.fire({
         position: 'center',
         icon: 'success',
-        title: 'Cita tomada con exito',
+        title: 'Cita generada con exíto',
         showConfirmButton: false,
         timer: 2500
     })
@@ -96,7 +112,7 @@ export default class Cita extends Component {
                             </select>
                         </div>
 
-                        <button type="submit" className="btn btn-1 mt-5  d-block btn-lg">Solicitar</button>
+                        <button type="submit" className="btn btn-1 mt-5  btn-block btn-lg">Solicitar</button>
                     </div>
                 </form>
             </div>
