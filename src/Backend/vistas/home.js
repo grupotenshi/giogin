@@ -22,13 +22,6 @@ export default class Home extends Component {
 
 
   componentDidMount() {
-
-
-
-
-
-
-
    db.collection('Proyectos').doc('Giogin').collection("Temporal").onSnapshot((snapShots)=>{
      this.setState({
        items: snapShots.docs.map( doc=>{
