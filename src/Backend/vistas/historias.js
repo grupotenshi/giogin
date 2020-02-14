@@ -10,7 +10,6 @@ const firebaseApp = !firebase.apps.length ? firebase.initializeApp(firebaseConfi
 const db = firebase.firestore();
 
 
-
 export default class Historias extends Component {
   state= {
     items:[],
