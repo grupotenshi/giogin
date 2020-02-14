@@ -207,7 +207,7 @@ export default class Historias extends Component {
 
                                   <td className="botones">
                                     <button className="btn btn-danger" onClick={()=>this.deleteItem(item.paciente.cedula,item.id)}>
-                                    CANCELAR
+                                    ELIMINAR
                                     </button>
                                   </td>
                               </tr>
