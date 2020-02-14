@@ -23,13 +23,7 @@ export default class Home extends Component {
 
   componentDidMount() {
 
-
-
-
-
-
-
-   db.collection('Proyectos').doc('Giogin').collection("Temporal").where('fecha', '==', '2020-02-05').onSnapshot((snapShots)=>{
+   db.collection('Proyectos').doc('Giogin').collection("Temporal").onSnapshot((snapShots)=>{
      this.setState({
        items: snapShots.docs.map( doc=>{
          return {id:doc.id, data:doc.data()}

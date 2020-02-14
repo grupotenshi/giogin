@@ -8,7 +8,7 @@ export default class Nav extends Component {
 
     return(
       <nav className="sticky">
-        <div className="logo d-flex align-items-center">
+        <div className="logo d-lg-flex align-items-center">
           <img src="img/logo.png" alt="" />
           <h6> Servicio integral de Ginecología </h6>
         </div>
